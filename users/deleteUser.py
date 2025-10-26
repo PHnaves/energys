@@ -1,13 +1,20 @@
+from connection.connection import connect_database
 
-# Função para deletar um usuário
-from Connection.connection import connect_database
-
-def deletar_usuario(id_usuario):
+def delete_user(user_id):
     connection = connect_database()
-    if connection:
-        cursor = connection.cursor()
-        query = "DELETE FROM users WHERE id = %s"
-        cursor.execute(query, (id_usuario,))
+    if not connection:
+        print("Falha na conexão com o banco.")
+        return
+
+    cursor = connection.cursor()
+
+    query = "DELETE FROM users WHERE user_id = %s"
+    try:
+        cursor.execute(query, (user_id,))
         connection.commit()
         print("Usuário deletado com sucesso!")
+    except Exception as e:
+        print(f"Erro ao deletar usuário: {e}")
+    finally:
+        cursor.close()
         connection.close()
