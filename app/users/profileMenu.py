@@ -1,45 +1,22 @@
-from users.createUser import create_user
-from users.loginUser import login_user
 from users.updateUser import update_user
 from users.deleteUser import delete_user
-from users.sessionUser import get_logged_user, clear_session, set_logged_user
+from users.sessionUser import clear_session, set_logged_user
 from users.readUser import get_user_by_id 
 
-def main():
-    while True:
-        print("=== BEM-VINDO(A) À ENERGYS ===")
-        print("1 - Login")
-        print("2 - Cadastro")
-        print("3 - Sair")
-
-        option = input("Escolha uma opção: ")
-        match option:
-            case "1":
-                login_user()
-                user = get_logged_user()
-                if user:
-                    menu(user)
-            case "2":
-                create_user()
-            case "3":
-                print("Saindo... Até mais!")
-                break
-            case _:
-                print("Opção inválida, tente novamente.\n")
-
-
-def menu(user):
+def profile_menu(user):
     while True:
         user = get_user_by_id(user['user_id'])
         if not user:
             print("Usuário não encontrado. Voltando ao menu principal.")
-            break
+            from app.main import main 
+            main()
 
-        print(f"\n=== MENU DO USUÁRIO ({user['user_name']}) ===")
+        print(f"\n=== PERFIL DO USUÁRIO ({user['user_name']}) ===")
         print("1 - Atualizar conta")
         print("2 - Deletar conta")
         print("3 - Ver meus dados")
         print("4 - Logout")
+        print("5 - Voltar")
 
         option = input("Escolha uma opção: ")
 
@@ -62,7 +39,9 @@ def menu(user):
                 if confirm == "s":
                     delete_user(user['user_id'])
                     clear_session()
-                    print("Conta deletada. Voltando ao menu principal...")
+                    print("Conta deletada. Voltando a tela inicial...")
+                    from app.main import main 
+                    main()
                     break
 
             case "3":
@@ -76,12 +55,14 @@ def menu(user):
             case "4":
                 clear_session()
                 print("Logout realizado com sucesso!\n")
+                from app.main import main  
+                main()
+            
+            case "5":
+                print("Voltando ao menu principal...")
+                from app.users.userMenu import user_menu 
+                user_menu(user)
                 break
 
             case _:
                 print("Opção inválida, tente novamente.")
-
-
-
-if __name__ == "__main__":
-    main()
