@@ -1,4 +1,5 @@
 from app.admin.categoriesMenuAdmin import category_menu_admin
+from app.admin.productsMenuAdmin import product_menu_admin
 from users.readUser import get_user_by_id
 
 # MENU PRINCIPAL ADM
@@ -19,7 +20,7 @@ def main_admin(user):
 
         match option:
             case "1":
-                print("Menu dos produtos")
+                product_menu_admin()
             case "2":
                 category_menu_admin()
             case "3":

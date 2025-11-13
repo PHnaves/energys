@@ -23,10 +23,14 @@ def category_menu_admin():
                 create_category(category_name, category_description)
             case "2":
                 categories = show_categories()
-                for category in categories:
-                    print(f"ID: {category['category_id']}")
-                    print(f"Nome: {category['category_name']}")
-                    print(f"Descrição: {category['category_description']}\n")
+                if categories:
+                    print("\n=== LISTA DE CATEGORIAS ===")
+                    for category in categories:
+                        print(f"ID: {category['category_id']}")
+                        print(f"Nome: {category['category_name']}")
+                        print(f"Descrição: {category['category_description']}\n")
+                else:
+                    print("Nenhuma categoria cadastrada.")
             case "3":
                 category_id = input("Digite o ID da categoria que deseja excluir: ")
                 delete_category(category_id)
