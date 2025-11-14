@@ -9,7 +9,10 @@ def show_categories():
     cursor = connection.cursor(dictionary=True, buffered=True)
 
     try:
-        cursor.execute("SELECT * FROM categories")
+        query = """
+            SELECT * FROM categories
+        """
+        cursor.execute(query)
         categories = cursor.fetchall()
         return categories
     except Exception as e:

@@ -15,7 +15,11 @@ def user_menu(user):
         print("2 - Produtos")
         print("3 - Sair")
 
-        option = input("Escolha uma opção: ")
+        try:
+            option = int(input("Escolha uma opção: "))
+        except ValueError:
+            print("Opção inválida, tente novamente. Opções: 1, 2, 3\n")
+            continue
 
         match option:
             case "1":

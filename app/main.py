@@ -12,10 +12,18 @@ def main():
         print("2 - Cadastro")
         print("3 - Sair")
 
-        option = input("Escolha uma opção: ")
+        try:
+            option = int(input("Escolha uma opção: "))
+        except ValueError:
+            print("Opção inválida, tente novamente. Opções: 1, 2, 3\n")
+            continue
+    
         match option:
             case "1":
-                login_user()
+                print("\n=== LOGIN ===")
+                email = input("Email: ")
+                password = input("Senha: ").encode('utf-8')
+                login_user(email, password)
                 user = get_logged_user()
                 if user:
                     if user["type_user"] == "ADM":
@@ -23,7 +31,14 @@ def main():
                     else:
                         user_menu(user)
             case "2":
-                create_user()
+                print("\n=== CADASTRO DE USUÁRIO ===")
+                user_name = input("Nome: ")
+                user_email = input("Email: ")
+                user_password = input("Senha: ").encode('utf-8')
+                user_cpf = input("CPF: ")
+                user_phone = input("Telefone: ")
+                user_date_birth = input("Data de nascimento (AAAA-MM-DD): ")
+                create_user(user_name, user_email, user_password, user_cpf, user_phone, user_date_birth)
             case "3":
                 print("Saindo... Até mais!")
                 break

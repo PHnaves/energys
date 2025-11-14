@@ -14,15 +14,24 @@ def product_menu_admin():
         print("4 - Atualizar produto")
         print("5 - Voltar ao menu principal")
 
-        option = input("Escolha uma opção: ")
+        try:
+            option = int(input("Escolha uma opção: "))
+        except ValueError:
+            print("Opção inválida, tente novamente. Opções: 1, 2, 3, 4, 5\n")
+            continue
 
         match option:
             case "1":
                 print("\n=== CADASTRO DE PRODUTO ===")
-                product_name = input("Nome do produto: ")
-                product_price = input("Preço do produto: ")
-                product_unit = input("Unidade do produto KG ou ML: ")
-                product_quantity = input("Quantidade do produto: ")
+                product_name = str(input("Nome do produto: "))
+                product_price = float(input("Preço do produto: "))
+                while True:
+                    product_unit = str(input("Unidade do produto KG ou ML: "))
+                    if product_unit not in ["KG", "ML"]:
+                        print("Unidade inválida, tente novamente. Opções: KG, ML\n")
+                    else:
+                        break
+                product_quantity = int(input("Quantidade do produto: "))
                 product_entry = product_quantity
                 product_exit = 0
                 print("\n=== SELECIONE A CATEGORIA DO PRODUTO ===")
@@ -52,15 +61,21 @@ def product_menu_admin():
                 else:
                     print("Nenhum produto cadastrado.")
             case "3":
+                print("\n=== EXCLUSÃO DE PRODUTO ===")
                 product_id = input("Digite o ID do produto que deseja excluir: ")
                 delete_product(product_id)
             case "4":
                 print("\n=== ATUALIZAR PRODUTO ===")
-                product_id = input("Digite o ID do produto que deseja atualizar: ")
-                product_name = input("Novo nome do produto: ")
-                product_price = input("Novo preço do produto: ")
-                product_unit = input("Nova unidade do produto: ")
-                product_quantity = input("Nova quantidade do produto: ")
+                product_id = int(input("Digite o ID do produto que deseja atualizar: "))
+                product_name = str(input("Novo nome do produto: "))
+                product_price = float(input("Novo preço do produto: "))
+                while True:
+                    product_unit = str(input("Unidade do produto KG ou ML: "))
+                    if product_unit not in ["KG", "ML"]:
+                        print("Unidade inválida, tente novamente. Opções: KG, ML\n")
+                    else:
+                        break
+                product_quantity = int(input("Nova quantidade do produto: "))
                 product_entry = product_quantity
                 product_exit = 0
                 print("\n=== SELECIONE A CATEGORIA DO PRODUTO ===")

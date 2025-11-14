@@ -6,10 +6,12 @@ def delete_category(category_id):
         print("Falha na conexão com o banco.")
         return
 
-    cursor = connection.cursor()
+    cursor = connection.cursor(dictionary=True, buffered=True)
 
-    query = "DELETE FROM categories WHERE category_id = %s"
     try:
+        query = """
+            DELETE FROM categories WHERE category_id = %s
+        """
         cursor.execute(query, (category_id,))
         connection.commit()
     

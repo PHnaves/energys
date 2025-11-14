@@ -8,8 +8,10 @@ def delete_product(product_id):
 
     cursor = connection.cursor()
 
-    query = "DELETE FROM products WHERE product_id = %s"
     try:
+        query = """
+            DELETE FROM products WHERE product_id = %s
+        """
         cursor.execute(query, (product_id,))
         connection.commit()
         if cursor.rowcount == 0:

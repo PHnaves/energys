@@ -8,8 +8,10 @@ def delete_user(user_id):
 
     cursor = connection.cursor()
 
-    query = "DELETE FROM users WHERE user_id = %s"
     try:
+        query = """
+            DELETE FROM users WHERE user_id = %s
+        """
         cursor.execute(query, (user_id,))
         connection.commit()
         print("Usuário deletado com sucesso!")

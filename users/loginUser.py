@@ -2,7 +2,7 @@ import bcrypt
 from connection.connection import connect_database
 from users.sessionUser import set_logged_user
 
-def login_user():
+def login_user(email, password):
     connection = connect_database()
     if not connection:
         print("Falha na conexão com o banco.")
@@ -10,17 +10,14 @@ def login_user():
 
     cursor = connection.cursor(dictionary=True, buffered=True)
 
-    print("\n=== LOGIN ===")
-    email = input("Email: ")
-    password = input("Senha: ").encode('utf-8')
-
     try:
-        query = "SELECT * FROM users WHERE user_email = %s"
+        query = """ 
+            SELECT * FROM users WHERE user_email = %s
+        """
         cursor.execute(query, (email,))
         user = cursor.fetchone()
 
         if user and bcrypt.checkpw(password, user['user_password'].encode('utf-8')):
-            print(f"\nBem-vindo(a), {user['user_name']}!\n")
             set_logged_user(user)  
         else:
             print("\nEmail ou senha incorretos.\n")

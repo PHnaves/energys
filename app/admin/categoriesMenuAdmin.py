@@ -13,13 +13,17 @@ def category_menu_admin():
         print("4 - Atualizar categoria")
         print("5 - Voltar ao menu principal")
 
-        option = input("Escolha uma opção: ")
+        try:
+            option = int(input("Escolha uma opção: "))
+        except ValueError:
+            print("Opção inválida, tente novamente. Opções: 1, 2, 3, 4, 5\n")
+            continue
 
         match option:
             case "1":
                 print("\n=== CADASTRO DE CATEGORIA ===")
-                category_name = input("Nome da categoria: ")
-                category_description = input("Descrição da categoria: ")
+                category_name = str(input("Nome da categoria: "))
+                category_description = str(input("Descrição da categoria: "))
                 create_category(category_name, category_description)
             case "2":
                 categories = show_categories()
@@ -32,13 +36,18 @@ def category_menu_admin():
                 else:
                     print("Nenhuma categoria cadastrada.")
             case "3":
-                category_id = input("Digite o ID da categoria que deseja excluir: ")
+                print("\n=== EXCLUSÃO DE CATEGORIA ===")
+                try:
+                    category_id = int(input("Digite o ID da categoria que deseja excluir: "))
+                except ValueError:
+                    print("Opção inválida, digite somente numeros inteiros\n")
+                    continue
                 delete_category(category_id)
             case "4":
                 print("\n=== ATUALIZAR CATEGORIA ===")
                 category_id = int(input("Digite o ID da categoria que deseja atualizar: "))
-                category_name = input("Novo nome da categoria: ")
-                category_description = input("Nova descrição da categoria: ")
+                category_name = str(input("Novo nome da categoria: "))
+                category_description = str(input("Nova descrição da categoria: "))
                 update_category(category_id, category_name, category_description)
             case "5":
                 print("Voltando ao menu principal...")

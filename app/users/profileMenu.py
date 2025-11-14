@@ -18,16 +18,20 @@ def profile_menu(user):
         print("4 - Logout")
         print("5 - Voltar")
 
-        option = input("Escolha uma opção: ")
+        try:
+            option = int(input("Escolha uma opção: "))
+        except ValueError:
+            print("Opção inválida, tente novamente. Opções: 1, 2, 3, 4, 5\n")
+            continue
 
         match option:
             case "1":
                 print("=== ATUALIZAR CONTA ===")
-                name = input("Novo nome: ")
-                email = input("Novo email: ")
-                password = input("Nova senha: ")
-                cpf = input("Novo CPF: ")
-                phone = input("Novo telefone: ")
+                name = str(input("Novo nome: "))
+                email = str(input("Novo email: "))
+                password = str(input("Nova senha: "))
+                cpf = str(input("Novo CPF: "))
+                phone = str(input("Novo telefone: "))
                 date = input("Nova data de nascimento (AAAA-MM-DD): ")
                 update_user(user['user_id'], name, email, password, cpf, phone, date)
 
