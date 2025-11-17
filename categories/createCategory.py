@@ -17,10 +17,8 @@ def create_category(category_name, category_description):
         cursor.execute(query, values)
         connection.commit()
         print("\nCategoria cadastrada com sucesso!\n")
-
     except Exception as e:
         print(f"Erro ao cadastrar categoria: {e}")
-
     finally:
         cursor.close()
         connection.close()

@@ -7,6 +7,7 @@ def get_user_by_id(user_id):
         return None
 
     cursor = connection.cursor(dictionary=True, buffered=True)
+    
     try:
         query = "SELECT * FROM users WHERE user_id = %s"
         cursor.execute(query, (user_id,))

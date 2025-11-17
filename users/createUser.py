@@ -1,7 +1,7 @@
 import bcrypt
 from connection.connection import connect_database
 
-def create_user(user_name, user_email, user_password, user_cpf, user_phone, user_date_birth):
+def create_user(user_name, user_email, user_password, user_cpf, user_date_birth):
     connection = connect_database()
     if not connection:
         print("Falha na conexão com o banco.")
@@ -12,14 +12,13 @@ def create_user(user_name, user_email, user_password, user_cpf, user_phone, user
 
     try:
         query = """
-            INSERT INTO users (user_name, user_email, user_password, user_cpf, user_phone, user_date_birth)
-            VALUES (%s, %s, %s, %s, %s, %s)
+            INSERT INTO users (user_name, user_email, user_password, user_cpf, user_date_birth)
+            VALUES (%s, %s, %s, %s, %s)
         """
-        values = (user_name, user_email, hashed_password, user_cpf, user_phone, user_date_birth)
+        values = (user_name, user_email, hashed_password, user_cpf, user_date_birth)
         cursor.execute(query, values)
         connection.commit()
         print("\nUsuário cadastrado com sucesso!\n")
-
     except Exception as e:
         print(f"Erro ao cadastrar usuário: {e}")
     finally:

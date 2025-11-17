@@ -19,19 +19,18 @@ def main_admin(user):
         try:
             option = int(input("Escolha uma opção: "))
         except ValueError:
-            print("Opção inválida, tente novamente. Opções: 1, 2, 3, 4, 5\n")
+            print("Opção inválida, tente novamente. Opções: 1, 2, 3\n")
             continue
 
         match option:
-            case "1":
+            case 1:
                 product_menu_admin()
-            case "2":
+            case 2:
                 category_menu_admin()
-            case "3":
+            case 3:
                 print("Saindo... Até mais!")
                 from app.main import main
                 main()
-           
             case _:
-                print("Opção inválida, tente novamente.\n")
+                print("Opção inválida, tente novamente. Opções: 1, 2, 3\n")
 

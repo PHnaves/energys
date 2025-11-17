@@ -6,7 +6,7 @@ def delete_user(user_id):
         print("Falha na conexão com o banco.")
         return
 
-    cursor = connection.cursor()
+    cursor = connection.cursor(dictionary=True, buffered=True) 
 
     try:
         query = """

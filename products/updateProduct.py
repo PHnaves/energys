@@ -20,7 +20,7 @@ def update_product(product_id, product_name, product_price, product_unit, produc
         if cursor.rowcount == 0:
             print(f"Nenhum produto encontrado com o ID {product_id}.")
         else:
-            print("Produto atualizado com sucesso!")    
+            print("\nProduto atualizado com sucesso!\n")    
 
     except Exception as e:
         print(f"Erro ao atualizar produto: {e}")

@@ -14,11 +14,10 @@ def delete_category(category_id):
         """
         cursor.execute(query, (category_id,))
         connection.commit()
-    
         if cursor.rowcount == 0:
             print(f"Nenhuma categoria encontrada com o ID {category_id}.")
         else:
-            print("Categoria deletada com sucesso!")
+            print("\nCategoria deletada com sucesso!\n")
     except Exception as e:
         print(f"Erro ao deletar categoria: {e}")
     finally:

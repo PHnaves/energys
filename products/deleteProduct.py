@@ -17,7 +17,7 @@ def delete_product(product_id):
         if cursor.rowcount == 0:
             print(f"Nenhum produto encontrado com o ID {product_id}.")
         else:
-            print("Produto deletado com sucesso!")
+            print("\nProduto deletado com sucesso!\n")
     except Exception as e:
         print(f"Erro ao deletar produto: {e}")
     finally:

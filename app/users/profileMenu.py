@@ -25,20 +25,19 @@ def profile_menu(user):
             continue
 
         match option:
-            case "1":
-                print("=== ATUALIZAR CONTA ===")
+            case 1:
+                print("\n=== ATUALIZAR CONTA ===")
                 name = str(input("Novo nome: "))
                 email = str(input("Novo email: "))
                 password = str(input("Nova senha: "))
                 cpf = str(input("Novo CPF: "))
-                phone = str(input("Novo telefone: "))
                 date = input("Nova data de nascimento (AAAA-MM-DD): ")
-                update_user(user['user_id'], name, email, password, cpf, phone, date)
+                update_user(user['user_id'], name, email, password, cpf, date)
 
                 updated_user = get_user_by_id(user['user_id'])
                 set_logged_user(updated_user)
 
-            case "2":
+            case 2:
                 confirm = input("Tem certeza que deseja deletar sua conta? (s/n): ").lower()
                 if confirm == "s":
                     delete_user(user['user_id'])
@@ -48,25 +47,24 @@ def profile_menu(user):
                     main()
                     break
 
-            case "3":
+            case 3:
                 print("\n=== SEUS DADOS ===")
                 print(f"Nome: {user['user_name']}")
                 print(f"Email: {user['user_email']}")
                 print(f"CPF: {user['user_cpf']}")
-                print(f"Telefone: {user['user_phone']}")
                 print(f"Data de nascimento: {user['user_date_birth']}")
 
-            case "4":
+            case 4:
                 clear_session()
                 print("Logout realizado com sucesso!\n")
                 from app.main import main  
                 main()
             
-            case "5":
+            case 5:
                 print("Voltando ao menu principal...")
                 from app.users.userMenu import user_menu 
                 user_menu(user)
                 break
 
             case _:
-                print("Opção inválida, tente novamente.")
+                print("Opção inválida, tente novamente. Opções: 1, 2, 3\n")

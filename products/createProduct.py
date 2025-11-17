@@ -17,10 +17,8 @@ def create_product(product_name, product_price, product_unit, product_quantity, 
         cursor.execute(query, values)
         connection.commit()
         print("\nProduto cadastrado com sucesso!\n")
-
     except Exception as e:
         print(f"Erro ao cadastrar produto: {e}")
-
     finally:
         cursor.close()
         connection.close()

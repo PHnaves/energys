@@ -2,7 +2,7 @@ from connection.connection import connect_database
 import bcrypt
 from users.sessionUser import set_logged_user
 
-def update_user(user_id, user_name, user_email, user_password, user_cpf, user_phone, user_date_birth):
+def update_user(user_id, user_name, user_email, user_password, user_cpf, user_date_birth):
     connection = connect_database()
     if not connection:
         print("Falha na conexão com o banco.")
@@ -15,9 +15,9 @@ def update_user(user_id, user_name, user_email, user_password, user_cpf, user_ph
         cursor.execute("""
             UPDATE users
             SET user_name = %s, user_email = %s, user_password = %s,
-                user_cpf = %s, user_phone = %s, user_date_birth = %s
+                user_cpf = %s, user_date_birth = %s
             WHERE user_id = %s
-        """, (user_name, user_email, hashed_password, user_cpf, user_phone, user_date_birth, user_id))
+        """, (user_name, user_email, hashed_password, user_cpf, user_date_birth, user_id))
         connection.commit()
         print("Usuário atualizado com sucesso!")
 

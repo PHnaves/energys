@@ -20,12 +20,12 @@ def category_menu_admin():
             continue
 
         match option:
-            case "1":
+            case 1:
                 print("\n=== CADASTRO DE CATEGORIA ===")
                 category_name = str(input("Nome da categoria: "))
                 category_description = str(input("Descrição da categoria: "))
                 create_category(category_name, category_description)
-            case "2":
+            case 2:
                 categories = show_categories()
                 if categories:
                     print("\n=== LISTA DE CATEGORIAS ===")
@@ -35,7 +35,7 @@ def category_menu_admin():
                         print(f"Descrição: {category['category_description']}\n")
                 else:
                     print("Nenhuma categoria cadastrada.")
-            case "3":
+            case 3:
                 print("\n=== EXCLUSÃO DE CATEGORIA ===")
                 try:
                     category_id = int(input("Digite o ID da categoria que deseja excluir: "))
@@ -43,18 +43,22 @@ def category_menu_admin():
                     print("Opção inválida, digite somente numeros inteiros\n")
                     continue
                 delete_category(category_id)
-            case "4":
+            case 4:
                 print("\n=== ATUALIZAR CATEGORIA ===")
-                category_id = int(input("Digite o ID da categoria que deseja atualizar: "))
+                try:
+                    category_id = int(input("Digite o ID da categoria que deseja atualizar: "))
+                except ValueError:
+                    print("Opção inválida, digite somente numeros inteiros\n")
+                    continue
                 category_name = str(input("Novo nome da categoria: "))
                 category_description = str(input("Nova descrição da categoria: "))
                 update_category(category_id, category_name, category_description)
-            case "5":
+            case 5:
                 print("Voltando ao menu principal...")
                 user = get_logged_user()
                 if user:
                     from app.admin.mainAdmin import main_admin
                     main_admin(user)
             case _:
-                print("Opção inválida, tente novamente.\n")
+                print("Opção inválida, tente novamente. Opções: 1, 2, 3\n")
            

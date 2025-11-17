@@ -1,5 +1,6 @@
 from users.readUser import get_user_by_id
 from app.users.profileMenu import profile_menu
+from users.sessionUser import clear_session
 
 # MENU PRINCIPAL
 def user_menu(user):
@@ -22,12 +23,14 @@ def user_menu(user):
             continue
 
         match option:
-            case "1":
+            case 1:
                 profile_menu(user)
-            case "2":
+            case 2:
                 print("Menu dos produtos")
-            case "3":
-                print("Saindo... Até mais!")
-                break
+            case 3:
+                clear_session()
+                print("Logout realizado com sucesso!\n")
+                from app.main import main  
+                main()
             case _:
-                print("Opção inválida, tente novamente.\n")
+                print("Opção inválida, tente novamente. Opções: 1, 2, 3\n")

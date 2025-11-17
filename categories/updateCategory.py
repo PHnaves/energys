@@ -19,7 +19,7 @@ def update_category(category_id, category_name, category_description):
         if cursor.rowcount == 0:
             print(f"Nenhuma categoria encontrada com o ID {category_id}.")
         else:
-            print("Categoria atualizada com sucesso!")
+            print("\nCategoria atualizada com sucesso!\n")
 
     except Exception as e:
         print(f"Erro ao atualizar categoria: {e}")

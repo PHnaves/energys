@@ -16,15 +16,12 @@ def login_user(email, password):
         """
         cursor.execute(query, (email,))
         user = cursor.fetchone()
-
         if user and bcrypt.checkpw(password, user['user_password'].encode('utf-8')):
             set_logged_user(user)  
         else:
             print("\nEmail ou senha incorretos.\n")
-
     except Exception as e:
         print(f"Erro ao realizar login: {e}")
-
     finally:
         cursor.close()
         connection.close()

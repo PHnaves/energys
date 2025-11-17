@@ -19,9 +19,9 @@ def main():
             continue
     
         match option:
-            case "1":
+            case 1:
                 print("\n=== LOGIN ===")
-                email = input("Email: ")
+                email = str(input("Email: "))
                 password = input("Senha: ").encode('utf-8')
                 login_user(email, password)
                 user = get_logged_user()
@@ -30,20 +30,19 @@ def main():
                         main_admin(user)
                     else:
                         user_menu(user)
-            case "2":
+            case 2:
                 print("\n=== CADASTRO DE USUÁRIO ===")
-                user_name = input("Nome: ")
-                user_email = input("Email: ")
+                user_name = str(input("Nome: "))
+                user_email = str(input("Email: "))
                 user_password = input("Senha: ").encode('utf-8')
-                user_cpf = input("CPF: ")
-                user_phone = input("Telefone: ")
+                user_cpf = str(input("CPF: "))
                 user_date_birth = input("Data de nascimento (AAAA-MM-DD): ")
-                create_user(user_name, user_email, user_password, user_cpf, user_phone, user_date_birth)
-            case "3":
+                create_user(user_name, user_email, user_password, user_cpf, user_date_birth)
+            case 3:
                 print("Saindo... Até mais!")
                 break
             case _:
-                print("Opção inválida, tente novamente.\n")
+                print("Opção inválida, tente novamente. Opções: 1, 2, 3\n")
 
 
 if __name__ == "__main__":
