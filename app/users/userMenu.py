@@ -1,3 +1,4 @@
+from app.users.productsMenuUser import product_menu_user
 from users.readUser import get_user_by_id
 from app.users.profileMenu import profile_menu
 from users.sessionUser import clear_session
@@ -26,7 +27,7 @@ def user_menu(user):
             case 1:
                 profile_menu(user)
             case 2:
-                print("Menu dos produtos")
+                product_menu_user()
             case 3:
                 clear_session()
                 print("Logout realizado com sucesso!\n")
