@@ -1,7 +1,9 @@
+import bcrypt
 from users.updateUser import update_user
 from users.deleteUser import delete_user
 from users.sessionUser import clear_session, set_logged_user
-from users.readUser import get_user_by_id 
+from users.readUser import get_user_by_id
+from users.validationCpf import validation_cpf 
 
 def profile_menu(user):
     while True:
@@ -27,12 +29,51 @@ def profile_menu(user):
         match option:
             case 1:
                 print("\n=== ATUALIZAR CONTA ===")
-                name = str(input("Novo nome: "))
-                email = str(input("Novo email: "))
-                password = str(input("Nova senha: "))
-                cpf = str(input("Novo CPF: "))
-                date = input("Nova data de nascimento (AAAA-MM-DD): ")
-                update_user(user['user_id'], name, email, password, cpf, date)
+                print("1 - Nome")
+                print("2 - Email")
+                print("3 - Senha")
+                print("4 - CPF")
+                print("5 - Data de nascimento")
+                print("6 - Voltar")
+
+                try:
+                    update_option = int(input("Escolha uma opção: "))
+                except ValueError:
+                    print("Opção inválida, tente novamente. Opções: 1, 2, 3, 4, 5\n")
+                    continue
+               
+                match update_option:
+                    case 1:
+                        new_value = input("Novo nome: ")
+                        update_user(user['user_id'], new_value, update_option)
+
+                    case 2:
+                        new_value = input("Novo email: ")
+                        update_user(user['user_id'], new_value, update_option)
+
+                    case 3:
+                        old = input("Senha atual: ").encode('utf-8')
+                        if not bcrypt.checkpw(old, user['user_password'].encode('utf-8')):
+                            print("Senha atual incorreta.")
+                            continue
+
+                        new_password = input("Nova senha: ")
+                        update_user(user['user_id'], new_password, update_option)
+
+                    case 4:
+                        new_value = validation_cpf()
+                        update_user(user['user_id'], new_value, update_option)
+
+                    case 5:
+                        new_value = input("Nova data de nascimento: ")
+                        update_user(user['user_id'], new_value, update_option)
+
+                    case 6:
+                        continue
+
+                    case _:
+                        print("Opção inválida, tente novamente. Opções: 1, 2, 3, 4, 5\n")
+                        continue
 
                 updated_user = get_user_by_id(user['user_id'])
                 set_logged_user(updated_user)

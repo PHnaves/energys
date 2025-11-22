@@ -3,6 +3,7 @@ from app.users.userMenu import user_menu
 from users.createUser import create_user
 from users.loginUser import login_user
 from users.sessionUser import get_logged_user
+from users.validationCpf import validation_cpf
 
 # MENU INICIAL
 def main():
@@ -35,7 +36,7 @@ def main():
                 user_name = str(input("Nome: "))
                 user_email = str(input("Email: "))
                 user_password = input("Senha: ").encode('utf-8')
-                user_cpf = str(input("CPF: "))
+                user_cpf = validation_cpf()
                 user_date_birth = input("Data de nascimento (AAAA-MM-DD): ")
                 create_user(user_name, user_email, user_password, user_cpf, user_date_birth)
             case 3:
