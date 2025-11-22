@@ -1,9 +1,10 @@
 from connection.connection import connect_database
+from style.colors import RED, RESET, YELLOW
 
 def delete_product(product_id):
     connection = connect_database()
     if not connection:
-        print("Falha na conexão com o banco.")
+        print(f"{RED}Falha na conexão com o banco.{RESET}")
         return
 
     cursor = connection.cursor()
@@ -15,11 +16,11 @@ def delete_product(product_id):
         cursor.execute(query, (product_id,))
         connection.commit()
         if cursor.rowcount == 0:
-            print(f"Nenhum produto encontrado com o ID {product_id}.")
+            print(f"{YELLOW}Nenhum produto encontrado com o ID {product_id}.{RESET}")
         else:
             print("\nProduto deletado com sucesso!\n")
-    except Exception as e:
-        print(f"Erro ao deletar produto: {e}")
+    except Exception:
+        print(f"{RED}Erro ao deletar produto{RESET}")
     finally:
         cursor.close()
         connection.close()

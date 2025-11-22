@@ -1,9 +1,10 @@
 from connection.connection import connect_database
+from style.colors import GREEN, RED, RESET
 
 def delete_category(category_id):
     connection = connect_database()
     if not connection:
-        print("Falha na conexão com o banco.")
+        print(f"{RED}Falha na conexão com o banco.{RESET}")
         return
 
     cursor = connection.cursor(dictionary=True, buffered=True)
@@ -17,9 +18,9 @@ def delete_category(category_id):
         if cursor.rowcount == 0:
             print(f"Nenhuma categoria encontrada com o ID {category_id}.")
         else:
-            print("\nCategoria deletada com sucesso!\n")
-    except Exception as e:
-        print(f"Erro ao deletar categoria: {e}")
+            print(f"{GREEN}Categoria deletada com sucesso!{RESET}")
+    except Exception:
+        print(f"{RED}Erro ao deletar categoria{RESET}")
     finally:
         cursor.close()
         connection.close()

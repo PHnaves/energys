@@ -1,9 +1,10 @@
 from connection.connection import connect_database
+from style.colors import RED, RESET
 
 def show_categories():
     connection = connect_database()
     if not connection:
-        print("Falha na conexão com o banco.")
+        print(f"{RED}Falha na conexão com o banco.{RESET}")
         return
 
     cursor = connection.cursor(dictionary=True, buffered=True)
@@ -15,8 +16,8 @@ def show_categories():
         cursor.execute(query)
         categories = cursor.fetchall()
         return categories
-    except Exception as e:
-        print(f"Erro ao buscar categorias: {e}")
+    except Exception:
+        print(f"{RED}Erro ao buscar categorias{RESET}")
     finally:
         cursor.close()
         connection.close()

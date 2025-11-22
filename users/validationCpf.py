@@ -1,13 +1,15 @@
+from style.colors import CYAN, GREEN, RED, RESET, YELLOW
+
 def validation_cpf():
     while True:
-        cpf = input("Digite o CPF (somente números): ")
+        cpf = input(CYAN + "Digite o CPF (somente números): " + RESET)
 
         if len(cpf) != 11 or not cpf.isdigit():
-            print(f"CPF {cpf} inválido! Deve ter 11 dígitos numéricos.\n")
+            print(f"{YELLOW}CPF {cpf} inválido! Deve ter 11 dígitos numéricos.{RESET}")
             continue
 
         if cpf == cpf[0] * 11:
-            print("CPF inválido (todos os dígitos iguais).\n")
+            print(f"{YELLOW}CPF inválido (todos os dígitos iguais).{RESET}")
             continue
 
         digits = [int(d) for d in cpf]
@@ -23,8 +25,8 @@ def validation_cpf():
             remainder2 = 0
 
         if remainder1 == digits[9] and remainder2 == digits[10]:
-            print(f"CPF {cpf} válido!\n")
+            print(f"{GREEN}CPF válido!{RESET}")
             return cpf
         else:
-            print(f"CPF {cpf} inválido!\n")
+            print(f"{RED}CPF inválido!{RESET}")
             continue

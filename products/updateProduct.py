@@ -1,9 +1,10 @@
 from connection.connection import connect_database
+from style.colors import GREEN, RED, RESET, YELLOW
 
 def update_product(product_id, product_name, product_price, product_unit, product_quantity, product_entry, product_exit, fk_categories_category_id):
     connection = connect_database()
     if not connection:
-        print("Falha na conexão com o banco.")
+        print(f"{RED}Falha na conexão com o banco.{RESET}")
         return
 
     cursor = connection.cursor(dictionary=True, buffered=True)
@@ -18,12 +19,12 @@ def update_product(product_id, product_name, product_price, product_unit, produc
         cursor.execute(query, values)
         connection.commit()
         if cursor.rowcount == 0:
-            print(f"Nenhum produto encontrado com o ID {product_id}.")
+            print(f"{YELLOW}Nenhum produto encontrado com o ID {product_id}.{RESET}")
         else:
-            print("\nProduto atualizado com sucesso!\n")    
+            print(f"{GREEN}Produto atualizado com sucesso!{RESET}")    
 
-    except Exception as e:
-        print(f"Erro ao atualizar produto: {e}")
+    except Exception:
+        print(f"{RED}Erro ao atualizar produto{RESET}")
 
     finally:
         cursor.close()

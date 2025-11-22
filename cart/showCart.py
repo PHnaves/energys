@@ -1,9 +1,10 @@
 from connection.connection import connect_database
+from style.colors import RED, RESET
 
 def show_cart(user_id):
     connection = connect_database()
     if not connection:
-        print("Falha na conexão com o banco.")
+        print(f"{RED}Falha na conexão com o banco.{RESET}")
         return
 
     cursor = connection.cursor(dictionary=True, buffered=True)
@@ -20,8 +21,8 @@ def show_cart(user_id):
         cart = cursor.fetchall()
         return cart
     
-    except Exception as e:
-        print(f"Erro ao buscar carrinho: {e}")
+    except Exception:
+        print(f"{RED}Erro ao buscar carrinho: {RESET}")
     
     finally:
         cursor.close()

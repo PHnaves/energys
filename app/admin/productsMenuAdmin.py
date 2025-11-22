@@ -3,131 +3,177 @@ from products.showProducts import show_products
 from products.createProduct import create_product
 from products.updateProduct import update_product
 from products.deleteProduct import delete_product
+from style.colors import CYAN, YELLOW, GREEN, RED, RESET
 from users.sessionUser import get_logged_user
 
 def product_menu_admin():
     while True:
-        print("\n=== MENU DE PRODUTOS ===")
-        print("1 - Criar produto")
-        print("2 - Listar produtos")
-        print("3 - Excluir produto")
-        print("4 - Atualizar produto")
-        print("5 - Voltar ao menu principal")
+        print(f"\n{GREEN}=== MENU DE PRODUTOS ADMIN ==={RESET}")
+
+        print(f"{CYAN}1 - Criar produto{RESET}")
+        print(f"{CYAN}2 - Listar produtos{RESET}")
+        print(f"{CYAN}3 - Excluir produto{RESET}")
+        print(f"{CYAN}4 - Atualizar produto{RESET}")
+        print(f"{CYAN}5 - Voltar ao menu principal{RESET}")
 
         try:
-            option = int(input("Escolha uma opção: "))
+            option = int(input(GREEN + "\nEscolha uma opção: " + RESET))
         except ValueError:
-            print("Opção inválida, tente novamente. Opções: 1, 2, 3, 4, 5\n")
+            print(f"{RED}Opção inválida! Digite números de 1 a 5.{RESET}\n")
             continue
 
         match option:
+            # ---------------------------------------------------------
+            # Criar Produto
+            # ---------------------------------------------------------
             case 1:
-                print("\n=== CADASTRO DE PRODUTO ===")
-                product_name = str(input("Nome do produto: "))
+                print(f"\n{GREEN}=== CADASTRO DE PRODUTO ==={RESET}")
+                
+                product_name = input(CYAN + "Nome do produto: " + RESET)
+                
                 try:
-                    product_price = float(input("Preço do produto: "))
+                    product_price = float(input(CYAN + "Preço do produto: " + RESET))
                 except ValueError:
-                    print("Preço inválido, digite somente numeros.")
+                    print(f"{RED}Preço inválido! Digite apenas números.{RESET}")
                     continue
+
                 while True:
-                    product_unit = str(input("Unidade do produto UN, ML, L, G, KG: ")).upper()
+                    product_unit = input(CYAN + "Unidade (UN, ML, L, G, KG): " + RESET).upper()
                     if product_unit not in ["UN", "ML", "L", "G", "KG"]:
-                        print("Unidade inválida, tente novamente. Opções: UN, ML, L, G, KG\n")
+                        print(f"{RED}Unidade inválida! Opções: UN, ML, L, G, KG.{RESET}")
                     else:
                         break
+
                 try:
-                    product_quantity = int(input("Quantidade do produto: "))
+                    product_quantity = int(input(CYAN + "Quantidade do produto: " + RESET))
                 except ValueError:
-                    print("Quantidade inválida, digite somente numeros inteiros.")
+                    print(f"{RED}Quantidade inválida! Digite apenas números inteiros.{RESET}")
                     continue
+
                 product_entry = product_quantity
                 product_exit = 0
-                print("\n=== SELECIONE A CATEGORIA DO PRODUTO ===")
+
+                print(f"\n{GREEN}=== SELECIONE A CATEGORIA ==={RESET}")
                 categories = show_categories()
+
                 if categories:
                     for category in categories:
-                        print(f"ID: {category['category_id']}")
-                        print(f"Nome: {category['category_name']}")
-                        print(f"Descrição: {category['category_description']}\n")
+                        print(f"{CYAN}ID:{RESET} {category['category_id']}")
+                        print(f"{CYAN}Nome:{RESET} {category['category_name']}")
+                        print(f"{CYAN}Descrição:{RESET} {category['category_description']}\n")
+
                     try:
-                        fk_categories_category_id = int(input("ID da categoria: "))
+                        fk_categories_category_id = int(input(CYAN + "ID da categoria: " + RESET))
                     except ValueError:
-                        print("ID inválido, digite somente numeros inteiros.")
+                        print(f"{RED}ID inválido! Digite apenas números.{RESET}")
                         continue
-                    create_product(product_name, product_price, product_unit, product_quantity, product_entry, product_exit, fk_categories_category_id)
+
+                    create_product(product_name, product_price, product_unit,
+                                   product_quantity, product_entry, product_exit,
+                                   fk_categories_category_id)
                 else:
-                    print("Nenhuma categoria cadastrada. Para criar um produto, primeiro cadastre uma categoria.")
+                    print(f"{YELLOW}Nenhuma categoria cadastrada! Cadastre uma categoria primeiro.{RESET}")
+
+            # ---------------------------------------------------------
+            # Listar Produtos
+            # ---------------------------------------------------------
             case 2:
                 products = show_products()
+
                 if products:
-                    print("\n=== LISTA DE PRODUTOS ===")
+                    print(f"\n{GREEN}=== LISTA DE PRODUTOS ==={RESET}")
                     for product in products:
-                        print(f"ID: {product['product_id']}")
-                        print(f"Nome: {product['product_name']}")
-                        print(f"Preço: {product['product_price']}")
-                        print(f"Unidade: {product['product_unit']}")
-                        print(f"Quantidade: {product['product_quantity']}")
-                        print(f"Entrada: {product['product_entry']}")
-                        print(f"Saida: {product['product_exit']}")
-                        print(f"Categoria: {product['category_name']}\n")
+                        print(f"{CYAN}ID:{RESET} {product['product_id']}")
+                        print(f"{CYAN}Nome:{RESET} {product['product_name']}")
+                        print(f"{CYAN}Preço:{RESET} {product['product_price']}")
+                        print(f"{CYAN}Unidade:{RESET} {product['product_unit']}")
+                        print(f"{CYAN}Quantidade:{RESET} {product['product_quantity']}")
+                        print(f"{CYAN}Entrada:{RESET} {product['product_entry']}")
+                        print(f"{CYAN}Saída:{RESET} {product['product_exit']}")
+                        print(f"{CYAN}Categoria:{RESET} {product['category_name']}\n")
                 else:
-                    print("Nenhum produto cadastrado.")
+                    print(f"{YELLOW}Nenhum produto cadastrado.{RESET}")
+
+            # ---------------------------------------------------------
+            # Excluir Produto
+            # ---------------------------------------------------------
             case 3:
-                print("\n=== EXCLUSÃO DE PRODUTO ===")
+                print(f"\n{GREEN}=== EXCLUSÃO DE PRODUTO ==={RESET}")
                 try:
-                    product_id = int(input("Digite o ID do produto que deseja excluir: "))
+                    product_id = int(input(CYAN + "ID do produto: " + RESET))
                 except ValueError:
-                    print("ID inválido, digite somente numeros inteiros.")
+                    print(f"{RED}ID inválido! Digite apenas números inteiros.{RESET}")
                     continue
+
                 delete_product(product_id)
+
+            # ---------------------------------------------------------
+            # Atualizar Produto
+            # ---------------------------------------------------------
             case 4:
-                print("\n=== ATUALIZAR PRODUTO ===")
+                print(f"\n{GREEN}=== ATUALIZAR PRODUTO ==={RESET}")
                 try:
-                    product_id = int(input("Digite o ID do produto que deseja atualizar: "))
+                    product_id = int(input(CYAN + "ID do produto: " + RESET))
                 except ValueError:
-                    print("ID inválido, digite somente numeros inteiros.")
+                    print(f"{RED}ID inválido! Digite apenas números inteiros.{RESET}")
                     continue
-                product_name = str(input("Novo nome do produto: "))
+
+                product_name = input(CYAN + "Novo nome do produto: " + RESET)
+
                 try:
-                    product_price = float(input("Novo preço do produto: "))
+                    product_price = float(input(CYAN + "Novo preço: " + RESET))
                 except ValueError:
-                    print("Preço inválido, digite somente numeros.")
+                    print(f"{RED}Preço inválido! Digite apenas números.{RESET}")
                     continue
+
                 while True:
-                    product_unit = str(input("Unidade do produto UN, ML, L, G, KG: ")).upper()
+                    product_unit = input(CYAN + "Unidade (UN, ML, L, G, KG): " + RESET).upper()
                     if product_unit not in ["UN", "ML", "L", "G", "KG"]:
-                        print("Unidade inválida, tente novamente. Opções: UN, ML, L, G, KG\n")
+                        print(f"{RED}Unidade inválida! Opções: UN, ML, L, G, KG.{RESET}")
                     else:
                         break
+
                 try:
-                    product_quantity = int(input("Nova quantidade do produto: "))
+                    product_quantity = int(input(CYAN + "Nova quantidade: " + RESET))
                 except ValueError:
-                    print("Quantidade inválida, digite somente numeros inteiros.")
+                    print(f"{RED}Quantidade inválida! Digite apenas números inteiros.{RESET}")
                     continue
+
                 product_entry = product_quantity
                 product_exit = 0
-                print("\n=== SELECIONE A CATEGORIA DO PRODUTO ===")
+
+                print(f"\n{GREEN}=== SELECIONE A NOVA CATEGORIA ==={RESET}")
+
                 categories = show_categories()
+
                 if categories:
                     for category in categories:
-                        print(f"ID: {category['category_id']}")
-                        print(f"Nome: {category['category_name']}")
-                        print(f"Descrição: {category['category_description']}\n")
+                        print(f"{CYAN}ID:{RESET} {category['category_id']}")
+                        print(f"{CYAN}Nome:{RESET} {category['category_name']}")
+                        print(f"{CYAN}Descrição:{RESET} {category['category_description']}\n")
+
                     try:
-                        fk_categories_category_id = int(input("Digite o ID da categoria: "))
+                        fk_categories_category_id = int(input(CYAN + "ID da categoria: " + RESET))
                     except ValueError:
-                        print("ID inválido, digite somente numeros inteiros.")
+                        print(f"{RED}ID inválido! Digite apenas números.{RESET}")
                         continue
-                    update_product(product_id, product_name, product_price, product_unit, product_quantity, product_entry, product_exit, fk_categories_category_id)
+
+                    update_product(product_id, product_name, product_price, product_unit,
+                                   product_quantity, product_entry, product_exit,
+                                   fk_categories_category_id)
                 else:
-                    print("Nenhuma categoria cadastrada. Para atualizar um produto, primeiro cadastre uma categoria.")
+                    print(f"{YELLOW}Nenhuma categoria cadastrada! Cadastre uma categoria primeiro.{RESET}")
+
+            # ---------------------------------------------------------
+            # Voltar ao menu principal
+            # ---------------------------------------------------------
             case 5:
-                print("Voltando ao menu principal...")
+                print(f"{YELLOW}Voltando ao menu principal...{RESET}")
                 user = get_logged_user()
                 if user:
                     from app.admin.mainAdmin import main_admin
                     main_admin(user)
+                return
+
             case _:
-                print("Opção inválida, tente novamente. Opções: 1, 2, 3\n")
-           
-                                   
+                print(f"{RED}Opção inválida! Digite somente números de 1 a 5.{RESET}\n")

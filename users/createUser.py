@@ -1,10 +1,11 @@
 import bcrypt
 from connection.connection import connect_database
+from style.colors import GREEN, RED, RESET
 
 def create_user(user_name, user_email, user_password, user_cpf, user_date_birth):
     connection = connect_database()
     if not connection:
-        print("Falha na conexão com o banco.")
+        print(f"{RED}Falha na conexão com o banco.{RESET}")
         return
 
     cursor = connection.cursor(dictionary=True, buffered=True) 
@@ -18,9 +19,9 @@ def create_user(user_name, user_email, user_password, user_cpf, user_date_birth)
         values = (user_name, user_email, hashed_password, user_cpf, user_date_birth)
         cursor.execute(query, values)
         connection.commit()
-        print("\nUsuário cadastrado com sucesso!\n")
-    except Exception as e:
-        print(f"Erro ao cadastrar usuário: {e}")
+        print(f"{GREEN}Usuário cadastrado com sucesso!{RESET}")
+    except Exception:
+        print(f"{RED}Erro ao cadastrar usuário{RESET}")
     finally:
         cursor.close()
         connection.close()

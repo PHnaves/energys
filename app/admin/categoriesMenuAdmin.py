@@ -2,63 +2,70 @@ from categories.createCategory import create_category
 from categories.showCategories import show_categories
 from categories.updateCategory import update_category
 from categories.deleteCategory import delete_category
+from style.colors import CYAN, YELLOW, GREEN, RED, RESET
 from users.sessionUser import get_logged_user
 
 def category_menu_admin():
     while True:
-        print("\n=== MENU DE CATEGORIAS ADMIN ===")
-        print("1 - Criar categoria")
-        print("2 - Listar categorias")
-        print("3 - Excluir categoria")
-        print("4 - Atualizar categoria")
-        print("5 - Voltar ao menu principal")
+        print(f"\n{GREEN}=== MENU DE CATEGORIAS ADMIN ==={RESET}")
+        print(f"{CYAN}1 - Criar categoria{RESET}")
+        print(f"{CYAN}2 - Listar categorias{RESET}")
+        print(f"{CYAN}3 - Excluir categoria{RESET}")
+        print(f"{CYAN}4 - Atualizar categoria{RESET}")
+        print(f"{CYAN}5 - Voltar ao menu principal{RESET}")
 
         try:
-            option = int(input("Escolha uma opção: "))
+            option = int(input(GREEN + "\nEscolha uma opção: " + RESET))
         except ValueError:
-            print("Opção inválida, tente novamente. Opções: 1, 2, 3, 4, 5\n")
+            print(f"{RED}Opção inválida! Digite somente números 1, 2, 3, 4 ou 5.{RESET}\n")
             continue
 
         match option:
             case 1:
-                print("\n=== CADASTRO DE CATEGORIA ===")
-                category_name = str(input("Nome da categoria: "))
-                category_description = str(input("Descrição da categoria: "))
+                print(f"\n{GREEN}=== CADASTRO DE CATEGORIA ==={RESET}")
+                category_name = input(CYAN + "Nome da categoria: " + RESET)
+                category_description = input(CYAN + "Descrição da categoria: " + RESET)
                 create_category(category_name, category_description)
+
             case 2:
                 categories = show_categories()
                 if categories:
-                    print("\n=== LISTA DE CATEGORIAS ===")
+                    print(f"\n{GREEN}=== LISTA DE CATEGORIAS ==={RESET}")
                     for category in categories:
-                        print(f"ID: {category['category_id']}")
-                        print(f"Nome: {category['category_name']}")
-                        print(f"Descrição: {category['category_description']}\n")
+                        print(f"{CYAN}ID:{RESET} {category['category_id']}")
+                        print(f"{CYAN}Nome:{RESET} {category['category_name']}")
+                        print(f"{CYAN}Descrição:{RESET} {category['category_description']}\n")
                 else:
-                    print("Nenhuma categoria cadastrada.")
+                    print(f"{YELLOW}Nenhuma categoria cadastrada.{RESET}")
+
             case 3:
-                print("\n=== EXCLUSÃO DE CATEGORIA ===")
+                print(f"\n{GREEN}=== EXCLUSÃO DE CATEGORIA ==={RESET}")
                 try:
-                    category_id = int(input("Digite o ID da categoria que deseja excluir: "))
+                    category_id = int(input(CYAN + "Digite o ID da categoria que deseja excluir: " + RESET))
                 except ValueError:
-                    print("Opção inválida, digite somente numeros inteiros\n")
+                    print(f"{RED}ID inválido! Digite somente números.{RESET}\n")
                     continue
                 delete_category(category_id)
+
             case 4:
-                print("\n=== ATUALIZAR CATEGORIA ===")
+                print(f"\n{GREEN}=== ATUALIZAR CATEGORIA ==={RESET}")
                 try:
-                    category_id = int(input("Digite o ID da categoria que deseja atualizar: "))
+                    category_id = int(input(CYAN + "Digite o ID da categoria que deseja atualizar: " + RESET))
                 except ValueError:
-                    print("Opção inválida, digite somente numeros inteiros\n")
+                    print(f"{RED}ID inválido! Digite somente números.{RESET}\n")
                     continue
-                category_name = str(input("Novo nome da categoria: "))
-                category_description = str(input("Nova descrição da categoria: "))
+
+                category_name = input(CYAN + "Novo nome da categoria: " + RESET)
+                category_description = input(CYAN + "Nova descrição da categoria: " + RESET)
                 update_category(category_id, category_name, category_description)
+
             case 5:
-                print("Voltando ao menu principal...")
+                print(f"{YELLOW}Voltando ao menu principal...{RESET}")
                 user = get_logged_user()
                 if user:
                     from app.admin.mainAdmin import main_admin
                     main_admin(user)
+                return
+
             case _:
-                print("Opção inválida, tente novamente. Opções: 1, 2, 3\n")
-           
+                print(f"{RED}Opção inválida! Digite somente números 1, 2, 3, 4 ou 5.{RESET}\n")

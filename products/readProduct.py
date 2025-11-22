@@ -1,9 +1,10 @@
 from connection.connection import connect_database
+from style.colors import RED, RESET
 
 def read_product(product_id):
     connection = connect_database()
     if not connection:
-        print("Falha na conexão com o banco.")
+        print(f"{RED}Falha na conexão com o banco.{RESET}")
         return None
 
     cursor = connection.cursor(dictionary=True, buffered=True)
@@ -18,8 +19,8 @@ def read_product(product_id):
         cursor.execute(query, (product_id,))
         product = cursor.fetchone()
         return product
-    except Exception as e:
-        print(f"Erro ao buscar produto: {e}")
+    except Exception:
+        print(f"{RED}Erro ao buscar produto{RESET}")
     finally:
         cursor.close()
         connection.close()

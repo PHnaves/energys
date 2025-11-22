@@ -1,9 +1,10 @@
 from connection.connection import connect_database
+from style.colors import GREEN, RED, RESET, YELLOW
 
 def add_to_cart(quantity, user_id, product_id):
     connection = connect_database()
     if not connection:
-        print("Falha na conexão com o banco.")
+        print(f"{RED}Falha na conexão com o banco.{RESET}")
         return
 
     cursor = connection.cursor(dictionary=True, buffered=True)
@@ -15,11 +16,14 @@ def add_to_cart(quantity, user_id, product_id):
         product = cursor.fetchone()
 
         if not product:
-            print(f"Produto com ID {product_id} não encontrado.")
+            print(f"{RED}Produto com ID {product_id} não encontrado.{RESET}")
             return
 
         if quantity > product['product_quantity']:
-            print(f"\nQuantidade solicitada ({quantity}) é maior que o estoque disponível.\n")
+            print(
+                f"{YELLOW}\nQuantidade solicitada ({quantity}) "
+                f"é maior que o estoque disponível ({product['product_quantity']}).{RESET}\n"
+            )
             return
 
         query_select = """
@@ -33,7 +37,10 @@ def add_to_cart(quantity, user_id, product_id):
             new_quantity = existing['quantity'] + quantity
 
             if new_quantity > product['product_quantity']:
-                print(f"\nVocê já tem {existing['quantity']} unidades no carrinho. Não há estoque suficiente para adicionar mais.\n")
+                print(
+                    f"{YELLOW}\nVocê já tem {existing['quantity']} unidades no carrinho.\n"
+                    f"Não há estoque suficiente para adicionar mais.{RESET}\n"
+                )
                 return
 
             query_update = "UPDATE use_pro SET quantity = %s WHERE id = %s"
@@ -55,10 +62,10 @@ def add_to_cart(quantity, user_id, product_id):
         cursor.execute(update_stock_query, (quantity, quantity, product_id))
 
         connection.commit()
-        print("\nProduto adicionado ao carrinho e estoque atualizado com sucesso!\n")
+        print(f"{GREEN}\nProduto adicionado ao carrinho e estoque atualizado com sucesso!{RESET}\n")
 
-    except Exception as e:
-        print(f"Erro ao adicionar produto ao carrinho: {e}")
+    except Exception:
+        print(f"{RED}Erro ao adicionar produto ao carrinho{RESET}")
         connection.rollback()
 
     finally:

@@ -1,11 +1,12 @@
 from connection.connection import connect_database
 import bcrypt
+from style.colors import GREEN, RED, RESET, YELLOW
 from users.sessionUser import set_logged_user
 
 def update_user(user_id, new_value, option):
     connection = connect_database()
     if not connection:
-        print("Falha na conexão com o banco.")
+        print(f"{RED}Falha na conexão com o banco.{RESET}")
         return
 
     cursor = connection.cursor(dictionary=True, buffered=True)
@@ -20,7 +21,7 @@ def update_user(user_id, new_value, option):
     }
 
     if option not in fields:
-        print("Opção inválida para atualização.")
+        print(f"{YELLOW}Opção inválida para atualização.{RESET}")
         return
 
     field_name = fields[option]
@@ -34,14 +35,14 @@ def update_user(user_id, new_value, option):
         cursor.execute(query, (new_value, user_id))
         connection.commit()
 
-        print("Usuário atualizado com sucesso!")
+        print(f"{GREEN}Usuário atualizado com sucesso!{RESET}")
 
         cursor.execute("SELECT * FROM users WHERE user_id = %s", (user_id,))
         updated_user = cursor.fetchone()
         set_logged_user(updated_user)
 
-    except Exception as e:
-        print(f"Erro ao atualizar usuário: {e}")
+    except Exception:
+        print(f"{RED}Erro ao atualizar usuário{RESET}")
 
     finally:
         cursor.close()

@@ -1,10 +1,11 @@
 
 from connection.connection import connect_database
+from style.colors import GREEN, RED, RESET
 
 def remove_to_cart(user_id, product_id):
     connection = connect_database()
     if not connection:
-        print("Falha na conexão com o banco.")
+        print(f"{RED}Falha na conexão com o banco.{RESET}")
         return
 
     cursor = connection.cursor(dictionary=True, buffered=True)
@@ -18,7 +19,7 @@ def remove_to_cart(user_id, product_id):
         item = cursor.fetchone()
 
         if not item:
-            print("Produto não encontrado no carrinho.")
+            print(f"{RED}Produto com ID {product_id} não encontrado.{RESET}")
             return
 
         quantity = item["quantity"]
@@ -39,10 +40,9 @@ def remove_to_cart(user_id, product_id):
         cursor.execute(update_stock_query, (quantity, quantity, product_id))
 
         connection.commit()
-        print("\nProduto removido do carrinho e estoque restaurado com sucesso!\n")
-
-    except Exception as e:
-        print(f"Erro ao remover produto do carrinho: {e}")
+        print(f"{GREEN}\nProduto removido do carrinho e estoque atualizado com sucesso!{RESET}\n")
+    except Exception:
+       print(f"{RED}Erro ao remover produto do carrinho: {RESET}")
 
     finally:
         cursor.close()

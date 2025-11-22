@@ -1,6 +1,8 @@
 import mysql.connector
 from mysql.connector import Error
 
+from style.colors import RED, RESET
+
 def connect_database():
 
     try:
@@ -15,11 +17,7 @@ def connect_database():
         if connection.is_connected():
             return connection  
 
-    except Error as e:
-        print(f"Erro ao conectar ao banco de dados: {e}")
+    except Error:
+        print(f"{RED}Erro ao conectar ao banco de dados{RESET}")
         return None
 
-# Testando a conexão
-# connection = connect_database()
-# if connection:
-#     connection.close()  

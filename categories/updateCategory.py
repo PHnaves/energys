@@ -1,9 +1,10 @@
 from connection.connection import connect_database
+from style.colors import GREEN, RED, RESET
 
 def update_category(category_id, category_name, category_description):
     connection = connect_database()
     if not connection:
-        print("Falha na conexão com o banco.")
+        print(f"{RED}Falha na conexão com o banco.{RESET}")
         return
 
     cursor = connection.cursor(dictionary=True, buffered=True) 
@@ -17,12 +18,12 @@ def update_category(category_id, category_name, category_description):
         cursor.execute(query, (category_name, category_description, category_id))
         connection.commit()
         if cursor.rowcount == 0:
-            print(f"Nenhuma categoria encontrada com o ID {category_id}.")
+            print(f"{RED}Nenhuma categoria encontrada com o ID {category_id}.{RESET}")
         else:
-            print("\nCategoria atualizada com sucesso!\n")
+            print(f"{GREEN}Categoria atualizada com sucesso!{RESET}")
 
-    except Exception as e:
-        print(f"Erro ao atualizar categoria: {e}")
+    except Exception:
+        print(f"{RED}Erro ao atualizar categoria{RESET}")
     finally:
         cursor.close()
         connection.close()
