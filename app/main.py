@@ -49,7 +49,7 @@ def main():
 
             case 3:
                 print(f"{GREEN}Saindo... Até mais! 👋{RESET}")
-                break
+                exit()
 
             case _:
                 print(RED + "❌ Opção inválida, tente novamente!\n" + RESET)
