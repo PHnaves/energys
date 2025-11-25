@@ -8,10 +8,10 @@ def connect_database():
     try:
         connection = mysql.connector.connect(
             # credenciais do banco
-            host='localhost',  
-            user='root',  
-            password='154287639',  
-            database='energys'  
+            host='seu_localhost',  
+            user='seu_usuario',  
+            password='sua_senha',  
+            database='seu_banco_de_dados'  
         )
 
         if connection.is_connected():
